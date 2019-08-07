@@ -8,3 +8,4 @@ dist
 *.egg
 _env
 .idea
+venv

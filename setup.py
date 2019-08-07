@@ -10,7 +10,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Pika',
-    version='0.3.2',
+    version='0.4',
     url='https://github.com/WeatherDecisionTechnologies/flask-pika',
     license='BSD',
     author='Weather Decision Technologies',
@@ -22,8 +22,8 @@ setup(
     py_modules=['flask_pika'],
     platforms='any',
     install_requires=[
-        'Flask>=0.7',
-        'pika==0.10.0'
+        'Flask>=1.1',
+        'pika>=1.0'
     ],
     classifiers=[
         'Environment :: Web Environment',

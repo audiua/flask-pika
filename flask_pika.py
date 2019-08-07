@@ -1,32 +1,21 @@
 import datetime
 import pika
-import warnings
 from pika import connection
 
 # python-3 compatibility
-try:
-    from Queue import Queue
-except ImportError as e:
-    from queue import Queue
-
-try:
-    xrange
-except NameError as e:
-    xrange = range
-
+from queue import Queue
 
 __all__ = ['Pika']
 
-class Pika(object):
 
-    def __init__(self, app = None):
+class Pika():
+    def __init__(self, app=None):
         """
             Create the Flask Pika extension.
         """
         self.app = app
         if app is not None:
             self.init_app(app)
-
 
     def init_app(self, app):
         """
@@ -58,12 +47,11 @@ class Pika(object):
         if pool_params is not None:
             self.pool_size = pool_params['pool_size']
             self.pool_recycle = pool_params['pool_recycle']
-            for i in xrange(self.pool_size):
+            for i in range(self.pool_size):
                 channel = PrePopulationChannel()
                 self.__set_recycle_for_channel(channel, -1)
                 self.pool_queue.put(channel)
             self.__DEBUG("Pool params are %s" % pool_params)
-
 
     def __create_channel(self):
         """
@@ -74,7 +62,6 @@ class Pika(object):
         self.__DEBUG("Created AMQP Connection and Channel %s" % channel)
         self.__set_recycle_for_channel(channel)
         return channel
-
 
     def __destroy_channel(self, channel):
         """
@@ -87,7 +74,6 @@ class Pika(object):
         except Exception as e:
             self.__WARN("Failed to destroy channel cleanly %s" % e)
 
-
     def __set_recycle_for_channel(self, channel, recycle_time = None):
         """
             Set the next recycle time for a channel
@@ -97,8 +83,6 @@ class Pika(object):
 
         self.channel_recycle_times[hash(channel)] = recycle_time
 
-
-
     def __remove_recycle_time_for_channel(self, channel):
         """
             Remove the recycle time for a given channel if it exists
@@ -107,14 +91,12 @@ class Pika(object):
         if channel_hash in self.channel_recycle_times:
             del self.channel_recycle_times[channel_hash]
 
-
     def __should_recycle_channel(self, channel):
         """
             Determine if a channel should be recycled based on it's recycle time
         """
         recycle_time = self.channel_recycle_times[hash(channel)]
         return recycle_time < unix_time_millis_now()
-
 
     def channel(self):
         """
@@ -156,7 +138,6 @@ class Pika(object):
 
         return ch
 
-
     def return_channel(self, channel):
         """
             Return a channel
@@ -175,7 +156,6 @@ class Pika(object):
         #if not using pooling then just destroy the channel
         else:
             self.__destroy_channel(channel)
-
 
     def return_broken_channel(self, channel):
         """
