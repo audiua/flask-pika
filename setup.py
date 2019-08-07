@@ -10,7 +10,7 @@ from setuptools import setup
 
 setup(
     name='Flask-Pika',
-    version='0.4',
+    version='0.3.8',
     url='https://github.com/audiua/flask-pika',
     license='BSD',
     author='Weather Decision Technologies',
@@ -19,7 +19,7 @@ setup(
     long_description=__doc__,
     zip_safe=False,
     include_package_data=True,
-    # py_modules=['flask_pika'],
+    py_modules=['flask_pika'],
     platforms='any',
     install_requires=[
         'Flask>=1.1',
